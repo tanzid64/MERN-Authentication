@@ -21,5 +21,16 @@ try {
   process.exit(1);
 }
 
-app.use('/api/v1/users', userRoute);
-app.use('/api/v1/auth', authRoute);
+app.use("/api/v1/users", userRoute);
+app.use("/api/v1/auth", authRoute);
+
+//! Error middleware
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "Internal Server Error";
+  res.status(statusCode).json({
+    success: false,
+    message,
+    statusCode,
+  });
+});

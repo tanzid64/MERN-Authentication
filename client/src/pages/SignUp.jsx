@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 const SignUp = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({});
   const handleOnChange = (event) => {
     setFormData({
@@ -16,11 +17,10 @@ const SignUp = () => {
         "http://localhost:3000/api/v1/auth/signup",
         formData
       );
-      console.log(res);
+      navigate("/signin");
     } catch (error) {
       console.log(error?.response?.data);
     }
-    
   };
   return (
     <div className="p-3 max-w-lg mx-auto">

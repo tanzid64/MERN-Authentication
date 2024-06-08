@@ -1,9 +1,13 @@
-import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useSignInMutation } from "../redux/apiSlices/authApi";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/slices/userSlice";
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [signIn, { isLoading }] = useSignInMutation();
   const [formData, setFormData] = useState({});
   const handleOnChange = (event) => {
     setFormData({
@@ -14,10 +18,8 @@ const SignIn = () => {
   const handleOnSubmit = async (event) => {
     event.preventDefault();
     try {
-      const res = await axios.post(
-        "http://localhost:3000/api/v1/auth/signin",
-        formData
-      );
+      const res = await signIn(formData);
+      dispatch(setUser(res.data.user));
       navigate("/");
     } catch (error) {
       console.log(error?.response?.data);
@@ -47,7 +49,7 @@ const SignIn = () => {
           type="submit"
           className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
         >
-          Sign Up
+          {isLoading ? "Loading..." : "Sign In"}
         </button>
       </form>
       <div className="mt-5">

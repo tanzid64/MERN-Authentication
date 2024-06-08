@@ -8,7 +8,7 @@ const Header = () => {
         </NavLink>
         <ul className="flex gap-5">
           <NavLink to="/">
-            <li>Home</li>
+            Home
           </NavLink>
           <NavLink to="/about">
             <li>About</li>

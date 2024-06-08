@@ -2,11 +2,13 @@ import express from "express";
 const app = express();
 import * as dotenv from "dotenv";
 dotenv.config();
+import cors from 'cors';
 import mongoose from "mongoose";
 import userRoute from "./routes/user.route.js";
 import authRoute from "./routes/auth.route.js";
 
 // Middlewares
+app.use(cors());
 app.use(express.json());
 
 // Database connection
